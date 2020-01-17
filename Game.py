@@ -1,7 +1,5 @@
 import pygame
 import time
-import os
-os.environ['SDL_VIDEODRIVER']='windib'
 
 class Game():
     def __init__(self):
@@ -19,9 +17,11 @@ class Game():
         pygame.init()
 
         # Open a new window
-        screen = pygame.display.set_mode((500,400))
+        screen = pygame.display.set_mode(self.size)
+        time.sleep(3)
+        pygame.display.set_caption("Sudoku with Auto Solve")
         pygame.display.update()
-        #pygame.display.set_caption("Sudoku with Auto Solve")
+        
 
     def run_game(self):
         self.init_game()
@@ -29,4 +29,8 @@ class Game():
 
         while(self.playing):
             time.sleep(3)
+            if event.type == pygame.QUIT:
+                self.playing = False
             self.playing = False
+
+        pygame.quit()
