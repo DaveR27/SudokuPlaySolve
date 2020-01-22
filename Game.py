@@ -25,13 +25,9 @@ class Board():
         self.row = row
         self.col = col
         self.window = window
-        self.game_surface = [][]
-
-    def create_board(self):
-        for i in self.row:
-            for j in self.col:
-                self.game_surface[i][j] = Square(i, j, self.BOARD[i][j])
-
+        self.game_surface = [
+            [Square(i,j,self.BOARD[i][j])for j in range(self.col)]for i in range(self.row)
+            ]
 
         
     def draw_board(self):
