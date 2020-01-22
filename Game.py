@@ -1,37 +1,47 @@
 import pygame
-import time
-import Board
+import Game
 
-class Game():
 
-    def __init__(self,  row, col):
+class Board():
+    BOARD = [
+        [7, 8, 0, 4, 0, 0, 1, 2, 0],
+        [6, 0, 0, 0, 7, 5, 0, 0, 9],
+        [0, 0, 0, 6, 0, 1, 0, 7, 8],
+        [0, 0, 7, 0, 4, 0, 2, 6, 0],
+        [0, 0, 1, 0, 5, 0, 9, 3, 0],
+        [9, 0, 4, 0, 6, 0, 0, 0, 5],
+        [0, 7, 0, 3, 0, 0, 0, 1, 2],
+        [1, 2, 0, 0, 0, 7, 4, 0, 0],
+        [0, 4, 9, 2, 0, 6, 0, 0, 7]
+    ]
+    # Define some colors
+    BLACK = (0, 0, 0)
+    WHITE = (255, 255, 255)
+    GREEN = (0, 255, 0)
+    RED = (255, 0, 0)
+    BLUE = (0, 0, 255)
+
+    def __init__(self, row, col, window):
         self.row = row
         self.col = col
-        self.size = (700, 500)
-        self.playing = True
+        self.window = window
+        self.game_surface = [][]
 
+    def create_board(self):
+        for i in self.row:
+            for j in self.col:
+                self.game_surface[i][j] = Square(i, j, self.BOARD[i][j])
 
-
-    """ Initalises the sudoku game"""
-    def start_game(self):
-        pygame.init()
-
-        # Open a new window
-        pygame.display.set_mode(self.size)
-        pygame.display.set_caption("Sudoku with Auto Solve")
-        #game_board = Board.Board(self.row, self.col, window)
-        
-        pygame.display.update()
 
         
-        
-    def run_game(self):
-        self.start_game()
-        
-        while(self.playing):
-            event = pygame.event.wait()
-            if event.type == pygame.quit():
-                self.playing = False
-            # self.playing = False
+    def draw_board(self):
+        pygame.draw.rect(self.window, self.BLACK, (4,4))
 
-        pygame.quit()
+
+
+class Square():
+    def __init__(self, row, col, num):
+        self.row = row
+        self.col = col
+        self.num = num
+
