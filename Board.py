@@ -1,4 +1,5 @@
-import pygame 
+import pygame
+import Game
 
 
 class Board():
@@ -13,8 +14,19 @@ class Board():
         [1, 2, 0, 0, 0, 7, 4, 0, 0],
         [0, 4, 9, 2, 0, 6, 0, 0, 7]
     ]
+        # Define some colors
+    BLACK = (0, 0, 0)
+    WHITE = (255, 255, 255)
+    GREEN = (0, 255, 0)
+    RED = (255, 0, 0)
+    BLUE = (0, 0, 255)
 
-    def __init__():
-        pass
+    def __init__(self, row, col, window):
+        self.row = row
+        self.col = col
+        self.window = window
+        
+    def draw_board(self):
+        pygame.draw.rect(self.window, self.BLACK, (4,4))
 
-    
+
