@@ -22,6 +22,7 @@ class Board():
     BLUE = (0, 0, 255)
 
     def __init__(self, row, col, square_dim,window):
+        pygame.font.init()
         self.row = row
         self.col = col
         self.square_dim = square_dim
@@ -35,11 +36,19 @@ class Board():
 
     def draw_grid(self):
         thick_line = 10
+        font = pygame.font.SysFont("comicsans", 40)
         dim = self.square_dim / self.boxes_across
         for i in range(self.row):
             for j in range(self.col):
                 self.draw_squares(i, j, dim)
                 self.draw_grid_lines(i, j, thick_line, dim)
+                self.draw_num(i, j, font, dim)
+
+    def draw_num(self, x, y, font, dim):
+        if self.game_surface[x][y].num != 0:
+            number = font.render(str(self.game_surface[x][y].num), 1, self.WHITE)
+            #blit creates a smaller canvas
+            self.window.blit(number, ((x*dim) + (dim/2 - number.get_width()/2), (y*dim) + (dim/2 - number.get_height()/2)))
     
     #i = x-axis, j = y-axis
     def draw_grid_lines(self, i, j, thick_line, dim):
