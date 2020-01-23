@@ -21,17 +21,39 @@ class Board():
     RED = (255, 0, 0)
     BLUE = (0, 0, 255)
 
-    def __init__(self, row, col, window):
+    def __init__(self, row, col, square_dim,window):
         self.row = row
         self.col = col
+        self.square_dim = square_dim
+        #how many number across the board is
+        self.boxes_across = 9 
         self.window = window
         self.game_surface = [
             [Square(i,j,self.BOARD[i][j])for j in range(self.col)]for i in range(self.row)
             ]
+        self.draw_grid()
+
+    def draw_grid(self):
+        thick_line = 10
+        dim = self.square_dim / self.boxes_across
+        for i in range(self.row):
+            for j in range(self.col):
+                self.draw_squares(i, j, dim)
+                self.draw_grid_lines(i, j, thick_line, dim)
+    
+    #i = x-axis, j = y-axis
+    def draw_grid_lines(self, i, j, thick_line, dim):
+        boarder_highlight = self.square_dim / self.boxes_across
+        if (i * dim) % boarder_highlight == 0 and i % 3 == 0 and i != 0 and j == 0:
+            pygame.draw.line(self.window, self.GREEN, (i*dim, j*dim), (i*dim, self.square_dim), thick_line)
+        if (j * dim) % boarder_highlight == 0 and j % 3 == 0 and j != 0 and i == 0:
+            pygame.draw.line(self.window, self.GREEN, (i*dim, j*dim), (self.square_dim, j*dim), thick_line)
 
         
-    def draw_board(self):
-        pygame.draw.rect(self.window, self.BLACK, (4,4))
+    def draw_squares(self, x, y, dim):
+        x = x * dim
+        y = y * dim
+        pygame.draw.rect(self.window, self.GREEN, (x, y, dim, dim), 3) #(surface, (colour), (x, y, width, height), line width)
 
 
 
