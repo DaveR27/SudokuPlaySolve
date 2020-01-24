@@ -1,7 +1,6 @@
 import pygame
 import Game
 
-
 class Board():
     BOARD = [
         [7, 8, 0, 4, 0, 0, 1, 2, 0],
@@ -59,7 +58,13 @@ class Board():
         if (j * dim) % boarder_highlight == 0 and j % 3 == 0 and j != 0 and i == 0:
             pygame.draw.line(self.window, self.GREEN, (i*dim, j*dim), (self.square_dim, j*dim), thick_line)
 
-        
+    """
+    Draws the squares onto the pygame window
+
+    @x: x-coord.
+    @y: y-coord.
+    @dim: pixels across divided by how many sudoku cubes there       are.
+    """
     def draw_squares(self, x, y, dim):
         x = x * dim
         y = y * dim
@@ -77,19 +82,30 @@ class Board():
         else:
             return None
     
+    """
+    Changes the number at the clicked position of the board.
+
+    @val: The new number for given position on the board.
+    """
     def sketch(self, val):
         self.game_surface[self.clicked_box[0]][self.clicked_box[1]].num = val
 
 
+    """
+    Checks to see if the move is valid for the specified move.
 
+    @x: x-coord.
+    @y: y-coord.
+    @key_press: button pressed by the player.
+    """
     def valid(self, x , y, key_press):
         valid_move = False
         pos = self.game_surface[x][y]
         if pos.num == 0:
-            for i in range(self.boxes_across):
+            for i in range(self.boxes_across): #check x-axis
                 if self.game_surface[i][y].num == key_press:
                     return valid_move
-            for j in range(self.boxes_across):
+            for j in range(self.boxes_across): #check y-axis
                 if self.game_surface[x][j].num == key_press:
                     return valid_move
             
@@ -106,13 +122,15 @@ class Board():
             return valid_move
         else:
             return valid_move
+
+    def game_won(self, playing):
+        for i in range(self.boxes_across):
+            for j in range(self.boxes_across):
+                if self.game_surface[i][j].num == 0:
+                    return playing
+        playing = False
+        return playing
             
-
-    
-
-
-            
-
 class Square():
     def __init__(self, row, col, num):
         self.row = row

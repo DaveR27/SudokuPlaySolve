@@ -3,8 +3,6 @@ import pygame
 import Game
 pygame.init()
 
-
-
 def main():
     row = 9
     col = 9
@@ -70,6 +68,7 @@ def main():
 
         #handles the updating of the display after a move    
         game_surface.draw_grid()
+        playing = game_surface.game_won(playing)
         pygame.display.update()
 
 
