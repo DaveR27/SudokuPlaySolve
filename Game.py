@@ -21,7 +21,7 @@ class Board():
     RED = (255, 0, 0)
     BLUE = (0, 0, 255)
 
-    def __init__(self, row, col, square_dim,window):
+    def __init__(self, row, col, square_dim, window):
         pygame.font.init()
         self.row = row
         self.col = col
@@ -32,6 +32,7 @@ class Board():
         self.game_surface = [
             [Square(i,j,self.BOARD[i][j])for j in range(self.col)]for i in range(self.row)
             ]
+        self.clicked_box = None
         self.draw_grid()
 
     def draw_grid(self):
@@ -65,10 +66,24 @@ class Board():
         pygame.draw.rect(self.window, self.GREEN, (x, y, dim, dim), 3) #(surface, (colour), (x, y, width, height), line width)
 
 
+    def click(self, pos):
+        if pos[0] < self.square_dim and pos[1] < self.square_dim:
+            dim = self.square_dim / self.boxes_across
+            x = pos[0] // dim
+            y = pos[1] // dim
+            self.clicked_box = (int(x), int(y))
+            print("Position:", (x, y))
+            return (int(x),int(y))
+        else:
+            return None
+    
+    def sketch(self, val):
+        self.game_surface[self.clicked_box[0]][self.clicked_box[1]].num = val
 
 class Square():
     def __init__(self, row, col, num):
         self.row = row
         self.col = col
         self.num = num
+
 

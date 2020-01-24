@@ -3,6 +3,8 @@ import pygame
 import Game
 pygame.init()
 
+
+
 def main():
     row = 9
     col = 9
@@ -14,6 +16,11 @@ def main():
 
     game_surface = Game.Board(row, col, square_dim, window)
     while playing:
+        if game_surface.clicked_box and key_press != None:
+            game_surface.sketch(key_press)
+            pygame.mouse.set_visible(True)
+            key_press = None
+            game_surface.clicked_box == None
 
         event = pygame.event.wait()
         if event.type == pygame.QUIT:
@@ -21,6 +28,8 @@ def main():
         if event.type == pygame.QUIT:
             playing = False
         if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                pass
             if event.key == pygame.K_1:
                 key_press = 1
             if event.key == pygame.K_2:
@@ -39,12 +48,21 @@ def main():
                 key_press = 8
             if event.key == pygame.K_9:
                 key_press = 9
-            if event.key == pygame.K_DELETE:
-                # game_surface.clear()
-                key_press = None
+            # if event.key == pygame.K_DELETE:
+            #     # game_surface.clear()
+            #     key_press = None
 
-            if event.key == pygame.K_SPACE:
-                pass
+        if event.type == pygame.MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
+                clicked = game_surface.click(pos)
+                if clicked:
+                    pygame.mouse.set_visible(False)
+                    
+
+        
+
+        game_surface.draw_grid()
+        pygame.display.update()
 
 
         pygame.display.update()
