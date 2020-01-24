@@ -80,10 +80,44 @@ class Board():
     def sketch(self, val):
         self.game_surface[self.clicked_box[0]][self.clicked_box[1]].num = val
 
+
+
+    def valid(self, x , y, key_press):
+        valid_move = False
+        pos = self.game_surface[x][y]
+        if pos.num == 0:
+            for i in range(self.boxes_across):
+                if self.game_surface[i][y].num == key_press:
+                    return valid_move
+            for j in range(self.boxes_across):
+                if self.game_surface[x][j].num == key_press:
+                    return valid_move
+            
+            # Check box
+            box_x = x // 3
+            box_y = y // 3
+
+            for i in range(box_x*3, box_x*3 + 3):
+                for j in range(box_y * 3, box_y*3 + 3):
+                    if self.game_surface[i][j].num == key_press and (i, j) != (pos.row, pos.col):
+                        return valid_move
+            
+            valid_move = True
+            return valid_move
+        else:
+            return valid_move
+            
+
+    
+
+
+            
+
 class Square():
     def __init__(self, row, col, num):
         self.row = row
         self.col = col
         self.num = num
+
 
 
