@@ -1,5 +1,6 @@
 # GUI.py
 import pygame
+import time
 import Game
 pygame.init()
 
@@ -37,7 +38,7 @@ def main():
             playing = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                pass
+                playing = game_surface.solve()
             if event.key == pygame.K_1:
                 key_press = 1
             if event.key == pygame.K_2:
@@ -73,4 +74,5 @@ def main():
 
 
 main()
+time.sleep(5)
 pygame.quit()

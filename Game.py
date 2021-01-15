@@ -3,15 +3,15 @@ import Game
 
 class Board():
     BOARD = [
-        [7, 8, 0, 4, 0, 0, 1, 2, 0],
-        [6, 0, 0, 0, 7, 5, 0, 0, 9],
-        [0, 0, 0, 6, 0, 1, 0, 7, 8],
-        [0, 0, 7, 0, 4, 0, 2, 6, 0],
-        [0, 0, 1, 0, 5, 0, 9, 3, 0],
-        [9, 0, 4, 0, 6, 0, 0, 0, 5],
-        [0, 7, 0, 3, 0, 0, 0, 1, 2],
-        [1, 2, 0, 0, 0, 7, 4, 0, 0],
-        [0, 4, 9, 2, 0, 6, 0, 0, 7]
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 7, 0, 0, 0, 0, 0, 2, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 5, 0, 0, 0],
+        [0, 0, 1, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 1, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 9, 0, 0, 0, 0, 0, 3, 0]
     ]
     # Define some colors
     BLACK = (0, 0, 0)
@@ -130,6 +130,38 @@ class Board():
                     return playing
         playing = False
         return playing
+
+    def find_zero(self):
+        for i in range(self.boxes_across):
+            for j in range(self.boxes_across):
+                if self.game_surface[i][j].num == 0:
+                    return (i, j)
+        return None
+
+    def solve(self):
+        empty = self.find_zero()
+        if not empty:
+            return True
+        else:
+            row, col = empty
+
+        for i in range(1,10):
+                
+                if self.valid(row, col, i):
+                    self.game_surface[row][col].num = i
+
+                    if self.solve():
+                        return True
+
+                    self.game_surface[row][col].num = 0
+
+        return False
+
+
+
+
+
+
             
 class Square():
     def __init__(self, row, col, num):
